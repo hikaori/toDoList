@@ -1,0 +1,20 @@
+Release you from messy (P) 
+
+Project description
+This App is a To Do List application. After making your account with just only name and Email, you can use this App. This App make sure to release you from many tasks that you need to do.
+
+Project specification
+Script : JavaFX
+Server side Script : Java Server Pages
+Database : MySql
+
+1. Create an account
+2. Login with Username and Password
+3. Add tasks or remove tasks
+4. Log out
+
+Project members
+Wataru
+Ken
+Momo
+Mai
