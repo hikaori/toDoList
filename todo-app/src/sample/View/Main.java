@@ -34,12 +34,12 @@ public class Main extends Application
         primaryStage.setTitle("Login");
 
         // Login
-        Scene scene = logInScene();
+        Scene scene = loginScene();
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    public Scene logInScene()
+    public Scene loginScene()
     {
         Pane root = new Pane();
 
@@ -96,6 +96,10 @@ public class Main extends Application
 
         return scene;
     }
+
+//    public Scene createAccountScene() {}
+//    public Scene indexScene() {}
+//    public Scene logoutScene() {}
 
     public static void main(String[] args)
     {
