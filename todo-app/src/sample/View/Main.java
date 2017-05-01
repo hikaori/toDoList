@@ -14,7 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
+import javafx.scene.paint.*;
+import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -38,10 +39,75 @@ public class Main extends Application
         stage = primaryStage;
         primaryStage.setTitle("Login");
 
-        // Show login screen
-        Scene scene = loginScene();
+        // Show create your account screen
+        Scene scene = createAccountScene();
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    /***************************************************************************
+    Screen mame: Create new account
+    Description: Get createNewAccount scene
+     ***************************************************************************/
+    public Scene createAccountScene()
+    {
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+
+        Button btn = new Button("Create account");
+        HBox hbBtn = new HBox(10);
+        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().add(btn);
+        grid.add(hbBtn, 1, 4);
+
+        final Text actiontarget = new Text();
+        grid.add(actiontarget, 1, 6);
+
+        btn.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent e) {
+                actiontarget.setFill(javafx.scene.paint.Color.FIREBRICK);
+                actiontarget.setText("Sign in button pressed");
+                stage.setTitle("Index");
+                stage.setScene(loginScene());
+            }
+        });
+
+        Text scenetitle = new Text("Welcome! \nCreate an account");
+        scenetitle.setFont(javafx.scene.text.Font.font("Tahoma", FontWeight.NORMAL, 20));
+        grid.add(scenetitle, 0, 0, 2, 1);
+
+        Label userName = new Label("User Name:");
+        grid.add(userName, 0, 1);
+
+        TextField userTextField = new TextField();
+        grid.add(userTextField, 1, 1);
+
+        Label pw = new Label("Password:");
+        grid.add(pw, 0, 2);
+
+        PasswordField pwBox = new PasswordField();
+        grid.add(pwBox, 1, 2);
+
+
+        Hyperlink hyperlink = new Hyperlink("create your acount");
+
+        hyperlink.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                getHostServices().showDocument("https://eclipse.org");
+            }
+        });
+
+        grid.getChildren().addAll(hyperlink);
+        hyperlink.setPadding(new Insets(100, 0, 20, 0));
+
+        Scene scene = new Scene(grid, 300, 275);
+        return scene;
     }
 
     /***************************************************************************
@@ -174,8 +240,8 @@ public class Main extends Application
             @Override
             public void handle(ActionEvent e)
             {
-                stage.setScene(indexScene());
                 stage.setTitle("Index");
+                stage.setScene(indexScene());
                 actiontarget.setText("Sign in button pressed");
             }
         });
@@ -184,8 +250,6 @@ public class Main extends Application
 
         return scene;
     }
-
-//    public Scene createAccountScene() {}
 //    public Scene logoutScene() {}
 
     public static void main(String[] args)
