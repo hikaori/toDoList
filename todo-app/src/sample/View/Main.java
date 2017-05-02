@@ -15,7 +15,9 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -44,10 +46,6 @@ public class Main extends Application
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        // Login momo added 5/2
-        Scene scene = loginScene();
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     /***************************************************************************
@@ -198,59 +196,52 @@ public class Main extends Application
      ***************************************************************************/
     public Scene loginScene()
     {
-        Pane root = new Pane();
-
-        // Make grid
+        stage.setTitle("To do list_login");
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        // Text
-        Text scenetitle = new Text("Welcome");
-        scenetitle.setId("welcome-text");
-        grid.add(scenetitle, 0, 0, 2, 1);
-
-        // Label
-        Label userName = new Label("User Name:");
-        grid.add(userName, 0, 1);
-
-        // TextField
-        TextField userTextField = new TextField();
-        grid.add(userTextField, 1, 1);
-
-        // Label
-        Label pw = new Label("Password:");
-        grid.add(pw, 0, 2);
-
-        // PasswordField
-        PasswordField pwBox = new PasswordField();
-        grid.add(pwBox, 1, 2);
-
-        // Button
-        Button btn = new Button("Login");
-        HBox hbBtn = new HBox(10);
+        Button btnNew = new Button("New account");
+        Button btn = new Button("Sign in");
+        HBox hbBtn = new HBox(5);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().add(btnNew);
         hbBtn.getChildren().add(btn);
-        grid.add(hbBtn, 1, 4);
+        grid.add(hbBtn, 1,4);
 
-        // Text
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
-        actiontarget.setId("actiontarget");
 
-        // Add action
-        btn.setOnAction(new EventHandler<ActionEvent>()
-        {
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent e) {
+                actiontarget.setFill(Color.FIREBRICK);
                 actiontarget.setText("Sign in button pressed");
             }
         });
 
-        Scene scene = new Scene(grid, 300, 275);
 
+        Text scenetitle = new Text("To Do List");
+        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        grid.add(scenetitle, 0, 0, 2, 1);
+
+        Label userName = new Label("User Name:");
+        grid.add(userName, 0, 1);
+
+        TextField userTextField = new TextField();
+        grid.add(userTextField, 1, 1);
+
+        Label pw = new Label("Password:");
+        grid.add(pw, 0, 2);
+
+        PasswordField pwBox = new PasswordField();
+        grid.add(pwBox, 1, 2);
+
+
+        Scene scene = new Scene(grid, 350, 280);
         return scene;
     }
 
