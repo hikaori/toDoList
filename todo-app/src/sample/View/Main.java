@@ -43,10 +43,15 @@ public class Main extends Application
         Scene scene = createAccountScene();
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        // Login momo added 5/2
+        Scene scene = loginScene();
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     /***************************************************************************
-    Screen mame: Create new account
+    Screen name: Create new account
     Description: Get createNewAccount scene
      ***************************************************************************/
     public Scene createAccountScene()
@@ -111,7 +116,7 @@ public class Main extends Application
     }
 
     /***************************************************************************
-     Screen mame: Index
+     Screen name: Index
      Description: Get Index scene
      ***************************************************************************/
     public Scene indexScene()
@@ -187,8 +192,9 @@ public class Main extends Application
     }
 
     /***************************************************************************
-     Screen mame: Login
+     Screen name: Login
      Description: Get Login scene
+     memo: momo changed 5/2
      ***************************************************************************/
     public Scene loginScene()
     {
@@ -238,10 +244,7 @@ public class Main extends Application
         btn.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
-            public void handle(ActionEvent e)
-            {
-                stage.setTitle("Index");
-                stage.setScene(indexScene());
+            public void handle(ActionEvent e) {
                 actiontarget.setText("Sign in button pressed");
             }
         });
@@ -250,6 +253,7 @@ public class Main extends Application
 
         return scene;
     }
+
 //    public Scene logoutScene() {}
 
     public static void main(String[] args)
