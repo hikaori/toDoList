@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.Node;
@@ -14,21 +15,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Pagination;
 import javafx.util.Callback;
-
-import java.awt.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Main extends Application
 {
@@ -41,9 +36,8 @@ public class Main extends Application
         stage = primaryStage;
         primaryStage.setTitle("Login");
 
-        // Show create your account screen
-        Scene scene = createAccountScene();
-        primaryStage.setScene(scene);
+        // Show login screen
+        primaryStage.setScene(loginScene());
         primaryStage.show();
 
     }
@@ -147,6 +141,24 @@ public class Main extends Application
         });
         grid.add(pagination, 0, 1, 2, 1);
 
+
+        // Button
+        Button btnLogout = new Button("Logout");
+        HBox hBtn = new HBox(10);
+        btnLogout.setAlignment(Pos.BOTTOM_RIGHT);
+        hBtn.getChildren().add(btnLogout);
+        btnLogout.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent e) {
+
+                // Go to logout scene
+                stage.setTitle("Logout");
+                stage.setScene(logoutScene());
+            }
+        });
+        grid.add(btnLogout, 1, 2);
+
         Scene scene = new Scene(grid, 400, 400);
 
         return scene;
@@ -194,7 +206,7 @@ public class Main extends Application
      Description: Get Login scene
      memo: momo changed 5/2
      ***************************************************************************/
-    public Scene loginScene()
+        public Scene loginScene()
     {
         stage.setTitle("To do list_login");
         GridPane grid = new GridPane();
@@ -217,12 +229,30 @@ public class Main extends Application
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(ActionEvent e) {
+            public void handle(ActionEvent e)
+            {
                 actiontarget.setFill(Color.FIREBRICK);
                 actiontarget.setText("Sign in button pressed");
+
+                // Go to index scene
+                stage.setTitle("Index");
+                stage.setScene(indexScene());
             }
         });
 
+        btnNew.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e)
+            {
+                actiontarget.setFill(Color.FIREBRICK);
+                actiontarget.setText("Create account button pressed");
+
+                // Go to create account scene
+                stage.setTitle("New account");
+                stage.setScene(createAccountScene());
+            }
+        });
 
         Text scenetitle = new Text("To Do List");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -245,7 +275,42 @@ public class Main extends Application
         return scene;
     }
 
-//    public Scene logoutScene() {}
+    /***************************************************************************
+     Screen mame: Logout
+     Description: Get Logout scene
+     ***************************************************************************/
+    public Scene logoutScene()
+    {
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+
+        //UNLOCKED ICON IMAGE
+        // 単純に画像を読み込んで表示。ファイルの場合はnew File( "ファイル名" ).toURI().toString()でパスを指定する
+        Image img = new Image("http://icons.iconarchive.com/icons/iconsmind/outline/128/Unlock-icon.png");
+        ImageView imgView = new ImageView(img);
+
+        grid.addRow(0, imgView);
+        GridPane.setHalignment(imgView, HPos.CENTER);
+
+        //TEXT
+        final Text actionTarget = new Text("Are you sure to logout your account?");
+        grid.add(actionTarget, 0, 1);
+
+        //BUTTON
+        Button btnNew = new Button("Cancel");
+        Button btn = new Button("OK");
+        HBox hbBtn2 = new HBox(5);
+        hbBtn2.setAlignment(Pos.BOTTOM_CENTER);
+        hbBtn2.getChildren().add(btnNew);
+        hbBtn2.getChildren().add(btn);
+        grid.add(hbBtn2, 0,2);
+
+        Scene scene = new Scene(grid, 350, 280);
+        return scene;
+    }
 
     public static void main(String[] args)
     {

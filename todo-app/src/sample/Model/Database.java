@@ -13,8 +13,8 @@ public class Database
         return instance;
     }
 
-    public static ArrayList<Todo> allTodos = new ArrayList<Todo>();
-    public static ArrayList<User> allUsers = new ArrayList<User>();
+    private ArrayList<Todo> allTodos = new ArrayList<Todo>();
+    private ArrayList<User> allUsers = new ArrayList<User>();
 
     // Check if the user exists
     public boolean isUserExists(String userName, String password)
