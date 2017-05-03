@@ -48,21 +48,21 @@ public class Main extends Application
      ***************************************************************************/
     public Scene createAccountScene()
     {
+        // Set margin / space
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
+        // Create account button
         Button btn = new Button("Create account");
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
         grid.add(hbBtn, 1, 4);
-
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
-
         btn.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
@@ -74,37 +74,35 @@ public class Main extends Application
             }
         });
 
+        // Message
         Text scenetitle = new Text("Welcome! \nCreate an account");
         scenetitle.setFont(javafx.scene.text.Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
+        // User name
         Label userName = new Label("User Name:");
         grid.add(userName, 0, 1);
-
         TextField userTextField = new TextField();
         grid.add(userTextField, 1, 1);
 
+        // Password
         Label pw = new Label("Password:");
         grid.add(pw, 0, 2);
-
         PasswordField pwBox = new PasswordField();
         grid.add(pwBox, 1, 2);
 
-
+        // Hyper link
         Hyperlink hyperlink = new Hyperlink("create your acount");
-
         hyperlink.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 getHostServices().showDocument("https://eclipse.org");
             }
         });
-
         grid.getChildren().addAll(hyperlink);
         hyperlink.setPadding(new Insets(100, 0, 20, 0));
 
-        Scene scene = new Scene(grid, 300, 275);
-        return scene;
+        return new Scene(grid, 300, 275);
     }
 
     /***************************************************************************
@@ -113,25 +111,34 @@ public class Main extends Application
      ***************************************************************************/
     public Scene indexScene()
     {
-        // Make grid
+        // Set margin / space
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(10, 10, 10, 10));
 
-        // TextField
+        // ToDo input field
         TextField todoInputField = new TextField();
         grid.add(todoInputField, 0, 0);
 
-        // Button
-        Button btn = new Button("Add");
+        // Add button
+        Button btnAdd = new Button("Add");
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(btn);
+        hbBtn.getChildren().add(btnAdd);
         grid.add(hbBtn, 1, 0);
+        btnAdd.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent e) {
 
-        // Paging view
+                // TODO: Add todo -> reload todo contents
+                System.out.println("ToDo added");
+            }
+        });
+
+        // Pagination
         Pagination pagination = new Pagination(5, 0);
         pagination.setPageFactory(new Callback<Integer, Node>() {
             @Override
@@ -141,8 +148,7 @@ public class Main extends Application
         });
         grid.add(pagination, 0, 1, 2, 1);
 
-
-        // Button
+        // Logout button
         Button btnLogout = new Button("Logout");
         HBox hBtn = new HBox(10);
         btnLogout.setAlignment(Pos.BOTTOM_RIGHT);
@@ -159,9 +165,7 @@ public class Main extends Application
         });
         grid.add(btnLogout, 1, 2);
 
-        Scene scene = new Scene(grid, 400, 400);
-
-        return scene;
+        return new Scene(grid, 400, 400);
     }
 
     public VBox createPage(int pageIndex)
@@ -179,7 +183,6 @@ public class Main extends Application
 
             // Add test and button
             Label text = new Label("Test" + (i+1));
-//            text.setStyle("-fx-background-color: #FFFFFF;");
             Button btn = new Button();
             btn.setText("Delete");
             btn.setOnAction(new EventHandler<ActionEvent>()
@@ -208,25 +211,24 @@ public class Main extends Application
      ***************************************************************************/
         public Scene loginScene()
     {
-        stage.setTitle("To do list_login");
+        // Set margin / space
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
+        // Add create new account button
         Button btnNew = new Button("New account");
-        Button btn = new Button("Sign in");
+        Button btnSignin = new Button("Sign in");
         HBox hbBtn = new HBox(5);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btnNew);
         hbBtn.getChildren().add(btn);
         grid.add(hbBtn, 1,4);
-
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
-
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        btnSignin.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e)
@@ -239,7 +241,6 @@ public class Main extends Application
                 stage.setScene(indexScene());
             }
         });
-
         btnNew.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -281,6 +282,7 @@ public class Main extends Application
      ***************************************************************************/
     public Scene logoutScene()
     {
+        // Set margin / space
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
