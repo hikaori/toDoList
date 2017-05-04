@@ -45,6 +45,7 @@ public class Main extends Application
     /***************************************************************************
     Screen name: Create new account
     Description: Get createNewAccount scene
+     memo: momo changed May 3rd
      ***************************************************************************/
     public Scene createAccountScene()
     {
@@ -56,27 +57,27 @@ public class Main extends Application
         grid.setPadding(new Insets(25, 25, 25, 25));
 
         // Create account button
-        Button btn = new Button("Create account");
+        Button btn = new Button("Make an account");
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
         grid.add(hbBtn, 1, 4);
+
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
-        btn.setOnAction(new EventHandler<ActionEvent>()
-        {
+
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent e) {
-                actiontarget.setFill(javafx.scene.paint.Color.FIREBRICK);
-                actiontarget.setText("Sign in button pressed");
-                stage.setTitle("Index");
-                stage.setScene(loginScene());
+                actiontarget.setFill(Color.FIREBRICK);
+                actiontarget.setText("Made your account");
             }
         });
 
         // Message
-        Text scenetitle = new Text("Welcome! \nCreate an account");
-        scenetitle.setFont(javafx.scene.text.Font.font("Tahoma", FontWeight.NORMAL, 20));
+        Text scenetitle = new Text("Put your name & password");
+        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
         // User name
@@ -91,16 +92,6 @@ public class Main extends Application
         PasswordField pwBox = new PasswordField();
         grid.add(pwBox, 1, 2);
 
-        // Hyper link
-        Hyperlink hyperlink = new Hyperlink("create your acount");
-        hyperlink.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                getHostServices().showDocument("https://eclipse.org");
-            }
-        });
-        grid.getChildren().addAll(hyperlink);
-        hyperlink.setPadding(new Insets(100, 0, 20, 0));
 
         return new Scene(grid, 300, 275);
     }
@@ -207,7 +198,7 @@ public class Main extends Application
     /***************************************************************************
      Screen name: Login
      Description: Get Login scene
-     memo: momo changed 5/2
+     memo: momo changed May 2nd, May 3rd
      ***************************************************************************/
         public Scene loginScene()
     {
@@ -223,8 +214,9 @@ public class Main extends Application
         Button btnSignin = new Button("Sign in");
         HBox hbBtn = new HBox(5);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().add(btnSignin);
         hbBtn.getChildren().add(btnNew);
-        hbBtn.getChildren().add(btn);
+
         grid.add(hbBtn, 1,4);
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
@@ -259,15 +251,15 @@ public class Main extends Application
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
+        // User name
         Label userName = new Label("User Name:");
         grid.add(userName, 0, 1);
-
         TextField userTextField = new TextField();
         grid.add(userTextField, 1, 1);
 
+        // password
         Label pw = new Label("Password:");
         grid.add(pw, 0, 2);
-
         PasswordField pwBox = new PasswordField();
         grid.add(pwBox, 1, 2);
 
