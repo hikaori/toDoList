@@ -24,6 +24,8 @@ import javafx.scene.control.Pagination;
 import javafx.util.Callback;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import sample.Model.Database;
+import sample.Model.User;
 
 public class Main extends Application
 {
@@ -220,19 +222,6 @@ public class Main extends Application
         grid.add(hbBtn, 1,4);
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
-        btnSignin.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e)
-            {
-                actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Sign in button pressed");
-
-                // Go to index scene
-                stage.setTitle("Index");
-                stage.setScene(indexScene());
-            }
-        });
         btnNew.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -262,6 +251,26 @@ public class Main extends Application
         grid.add(pw, 0, 2);
         PasswordField pwBox = new PasswordField();
         grid.add(pwBox, 1, 2);
+
+
+        btnSignin.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e)
+            {
+                String username = String.valueOf(userTextField.getText());
+                String password = String.valueOf(pwBox.getText());
+                Database db = Database.sharedInstance();
+                if(db.isUserExists(username, password))
+                {
+                    stage.setTitle("Index");
+                    stage.setScene(indexScene());
+                } else {
+                    stage.setTitle("New account");
+                    actiontarget.setText("You don't have your account.\nplease click \"create new account\"");
+                }
+            }
+        });
 
 
         Scene scene = new Scene(grid, 350, 280);
