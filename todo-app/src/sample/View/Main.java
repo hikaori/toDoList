@@ -1,6 +1,9 @@
 package sample.View;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -8,22 +11,18 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.layout.VBox;
-import javafx.scene.control.Pagination;
 import javafx.util.Callback;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.collections.FXCollections;
+
+import java.util.Random;
 
 public class Main extends Application
 {
@@ -111,61 +110,64 @@ public class Main extends Application
      ***************************************************************************/
     public Scene indexScene()
     {
-        // Set margin / space
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(10, 10, 10, 10));
+        final Random rng = new Random();
+        VBox vPane = new VBox(5);
+        ScrollPane sp = new ScrollPane(vPane);
+        sp.setFitToWidth(true);
 
-        // ToDo input field
-        TextField todoInputField = new TextField();
-        grid.add(todoInputField, 0, 0);
+        // Input field
+        TextField txtfTodo = new TextField();
 
-        // Add button
+        // Add todo list cards
         Button btnAdd = new Button("Add");
-        HBox hbBtn = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(btnAdd);
-        grid.add(hbBtn, 1, 0);
-        btnAdd.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent e) {
-
-                // TODO: Add todo -> reload todo contents
-                System.out.println("ToDo added");
-            }
+        btnAdd.setOnAction(e -> {
+            AnchorPane ap = new AnchorPane();
+//            String style = String.format("-fx-background: rgb(%d, %d, %d);"+
+//                            "-fx-background-color: -fx-background;",
+//                    rng.nextInt(256),
+//                    rng.nextInt(256),
+//                    rng.nextInt(256));
+//            anchorPane.setStyle(style);
+            Label label = new Label("Pane "+(vPane.getChildren().size()+1));
+            AnchorPane.setLeftAnchor(label, 5.0);
+            AnchorPane.setTopAnchor(label, 5.0);
+            Button button = new Button("Remove");
+            button.setOnAction(evt -> vPane.getChildren().remove(ap));
+            AnchorPane.setRightAnchor(button, 5.0);
+            AnchorPane.setTopAnchor(button, 5.0);
+            AnchorPane.setBottomAnchor(button, 5.0);
+            ap.getChildren().addAll(label, button);
+            vPane.getChildren().add(ap);
         });
 
-        // Pagination
-        Pagination pagination = new Pagination(5, 0);
-        pagination.setPageFactory(new Callback<Integer, Node>() {
-            @Override
-            public Node call(Integer pageIndex) {
-                return createPage(pageIndex);
-            }
-        });
-        grid.add(pagination, 0, 1, 2, 1);
+        // Textfield and add button
+        VBox vHeader = new VBox();
+        AnchorPane apHeader = new AnchorPane();
+        AnchorPane.setLeftAnchor(txtfTodo, 5.0);
+        AnchorPane.setTopAnchor(txtfTodo, 5.0);
+        AnchorPane.setRightAnchor(btnAdd, 5.0);
+        AnchorPane.setTopAnchor(btnAdd, 5.0);
+        AnchorPane.setBottomAnchor(btnAdd, 5.0);
+        apHeader.getChildren().addAll(txtfTodo, btnAdd);
+        vHeader.getChildren().add(apHeader);
 
         // Logout button
+        VBox vFooter = new VBox();
         Button btnLogout = new Button("Logout");
-        HBox hBtn = new HBox(10);
-        btnLogout.setAlignment(Pos.BOTTOM_RIGHT);
-        hBtn.getChildren().add(btnLogout);
-        btnLogout.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent e) {
+        AnchorPane apFooter = new AnchorPane();
+        AnchorPane.setRightAnchor(btnLogout, 5.0);
+        AnchorPane.setTopAnchor(btnLogout, 5.0);
+        AnchorPane.setBottomAnchor(btnLogout, 5.0);
+        apFooter.getChildren().addAll(btnLogout);
+        vFooter.getChildren().add(apFooter);
+        btnLogout.setOnAction(e -> {
 
-                // Go to logout scene
-                stage.setTitle("Logout");
-                stage.setScene(logoutScene());
-            }
+            // Go to logout scene
+            stage.setTitle("Logout");
+            stage.setScene(logoutScene());
         });
-        grid.add(btnLogout, 1, 2);
 
-        return new Scene(grid, 400, 400);
+        return new Scene(new BorderPane(sp, vHeader, null, vFooter, null), 700, 400);
     }
 
     public VBox createPage(int pageIndex)
@@ -224,7 +226,7 @@ public class Main extends Application
         HBox hbBtn = new HBox(5);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btnNew);
-        hbBtn.getChildren().add(btn);
+        hbBtn.getChildren().add(btnSignin);
         grid.add(hbBtn, 1,4);
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
