@@ -80,6 +80,10 @@ public class Database
         allUsers.add(new User("Wataru",  "123"));
     }
 
+    public void addNewTodo(String txtftodo,User user){
+        allTodos.add(new Todo(txtftodo, new User(user.getName(),user.getPassword())));
+    }
+
     private void setAllTodos()
     {
         allTodos.add(new Todo("Ken's Task 1", new User("Ken","123")));

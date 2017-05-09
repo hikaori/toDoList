@@ -158,6 +158,7 @@ public class Main extends Application
             ap.getChildren().addAll(label, button);
             vPane.getChildren().add(ap);
 
+            db.addNewTodo(txtftodo,user);
         });
 
         // Textfield and add button
@@ -206,7 +207,7 @@ public class Main extends Application
         }
         // momo put end------
 
-        return new Scene(new BorderPane(sp, vHeader, null, vFooter, null), 700, 400);
+        return new Scene(new BorderPane(sp, vHeader, null, vFooter, null), 600, 600);
     }
 
     public VBox createPage(int pageIndex)
