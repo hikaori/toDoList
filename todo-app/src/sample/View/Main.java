@@ -42,8 +42,8 @@ public class Main extends Application
     }
 
     /***************************************************************************
-    Screen name: Create new account
-    Description: Get createNewAccount scene
+     Screen name: Create new account
+     Description: Get createNewAccount scene
      memo: momo changed May 3rd
      ***************************************************************************/
     public Scene createAccountScene()
@@ -202,7 +202,7 @@ public class Main extends Application
      Description: Get Login scene
      memo: momo changed May 2nd, May 3rd
      ***************************************************************************/
-        public Scene loginScene()
+    public Scene loginScene()
     {
         // Set margin / space
         GridPane grid = new GridPane();
@@ -309,6 +309,24 @@ public class Main extends Application
         hbBtn2.getChildren().add(btnNew);
         hbBtn2.getChildren().add(btn);
         grid.add(hbBtn2, 0,2);
+
+
+        final Text actiontarget = new Text();
+        grid.add(actiontarget, 1, 6);
+
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e)
+            {
+//                actiontarget.setFill(Color.FIREBRICK);
+//                actiontarget.setText("Create account button pressed");
+
+                // Go to create account scene
+                stage.setTitle("login");
+                stage.setScene(loginScene());
+            }
+        });
 
         Scene scene = new Scene(grid, 350, 280);
         return scene;
