@@ -95,6 +95,28 @@ public class Main extends Application
         grid.add(pwBox, 1, 2);
 
 
+        //        // Password verify
+//        Label.pw2 = new Label("verify");
+//        grid.add(pw2,0,3);
+//        PasswordField pwbox2 = new PasswordField();
+//        grid.add(pwbox2,1,3);
+
+
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                //add new account
+                Database mydb = Database.sharedInstance();
+                mydb.createUserAccount(userTextField.getText(), pwBox.getText());
+//                System.out.println("Added");
+
+                // Go to login scene
+                stage.setTitle("Login");
+                stage.setScene(loginScene());
+            }
+        });
+
         return new Scene(grid, 300, 275);
     }
 
