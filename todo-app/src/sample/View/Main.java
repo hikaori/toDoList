@@ -20,8 +20,12 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import sample.Model.Database;
+import sample.Model.Todo;
 import sample.Model.User;
 
 public class Main extends Application
@@ -44,7 +48,6 @@ public class Main extends Application
     /***************************************************************************
      Screen name: Create new account
      Description: Get createNewAccount scene
-     memo: momo changed May 3rd
      ***************************************************************************/
     public Scene createAccountScene()
     {
@@ -99,7 +102,9 @@ public class Main extends Application
      Screen name: Index
      Description: Get Index scene
      ***************************************************************************/
-    public Scene indexScene()
+    // public Scene indexScene()
+    public Scene indexScene(User user, Database db) //Momo put
+
     {
         final Random rng = new Random();
         VBox vPane = new VBox(5);
@@ -112,6 +117,7 @@ public class Main extends Application
         // Add todo list cards
         Button btnAdd = new Button("Add");
         btnAdd.setOnAction(e -> {
+            String txtftodo = String.valueOf(txtfTodo.getText()); // momo put
             AnchorPane ap = new AnchorPane();
 //            String style = String.format("-fx-background: rgb(%d, %d, %d);"+
 //                            "-fx-background-color: -fx-background;",
@@ -119,7 +125,7 @@ public class Main extends Application
 //                    rng.nextInt(256),
 //                    rng.nextInt(256));
 //            anchorPane.setStyle(style);
-            Label label = new Label("Pane "+(vPane.getChildren().size()+1));
+            Label label = new Label("Pane "+(vPane.getChildren().size()+1) +" : "+ txtftodo); // momo put
             AnchorPane.setLeftAnchor(label, 5.0);
             AnchorPane.setTopAnchor(label, 5.0);
             Button button = new Button("Remove");
@@ -129,6 +135,7 @@ public class Main extends Application
             AnchorPane.setBottomAnchor(button, 5.0);
             ap.getChildren().addAll(label, button);
             vPane.getChildren().add(ap);
+
         });
 
         // Textfield and add button
@@ -157,6 +164,25 @@ public class Main extends Application
             stage.setTitle("Logout");
             stage.setScene(logoutScene());
         });
+
+        // momo put ----------
+        ArrayList<Todo> userTODO = db.getUserTodos(user);
+        for (Todo todo : userTODO) {
+            String title = todo.getTitle();
+
+            AnchorPane ap = new AnchorPane();
+            Label label = new Label("Pane "+(vPane.getChildren().size()+1) +" : "+ title); // momo put
+            AnchorPane.setLeftAnchor(label, 5.0);
+            AnchorPane.setTopAnchor(label, 5.0);
+            Button button = new Button("Remove");
+            button.setOnAction(evt -> vPane.getChildren().remove(ap));
+            AnchorPane.setRightAnchor(button, 5.0);
+            AnchorPane.setTopAnchor(button, 5.0);
+            AnchorPane.setBottomAnchor(button, 5.0);
+            ap.getChildren().addAll(label, button);
+            vPane.getChildren().add(ap);
+        }
+        // momo put end------
 
         return new Scene(new BorderPane(sp, vHeader, null, vFooter, null), 700, 400);
     }
@@ -200,7 +226,6 @@ public class Main extends Application
     /***************************************************************************
      Screen name: Login
      Description: Get Login scene
-     memo: momo changed May 2nd, May 3rd
      ***************************************************************************/
     public Scene loginScene()
     {
@@ -262,11 +287,12 @@ public class Main extends Application
                 Database db = Database.sharedInstance();
                 if(db.isUserExists(username, password))
                 {
+                    User user = new User(username, password);
                     stage.setTitle("Index");
-                    stage.setScene(indexScene());
+                    stage.setScene(indexScene(user,db));
                 } else {
                     stage.setTitle("New account");
-                    actiontarget.setText("You don't have your account.\nplease click \"create new account\"");
+                    actiontarget.setText("You don't have your account.\nTry again or create \"New account\"");
                 }
             }
         });
