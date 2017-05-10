@@ -94,31 +94,59 @@ public class Main extends Application
         PasswordField pwBox = new PasswordField();
         grid.add(pwBox, 1, 2);
 
-
-        //        // Password verify
-//        Label.pw2 = new Label("verify");
-//        grid.add(pw2,0,3);
-//        PasswordField pwbox2 = new PasswordField();
-//        grid.add(pwbox2,1,3);
-
+        // Password verify
+        Label pw2 = new Label("verify");
+        grid.add(pw2,0,3);
+        PasswordField pwBox2 = new PasswordField();
+        grid.add(pwBox2,1,3);
 
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
-                //add new account
-                Database mydb = Database.sharedInstance();
-                mydb.createUserAccount(userTextField.getText(), pwBox.getText());
-//                System.out.println("Added");
 
-                // Go to login scene
-                stage.setTitle("Login");
-                stage.setScene(loginScene());
+//                //check password value
+//                boolean checkPassword = true;
+//                if(!pwBox.equals(checkPassword)) {
+//                    actiontarget.setFill(Color.FIREBRICK);
+//                    actiontarget.setText("Password must be \r 6 - 10 characters long");
+//                }
+
+                if(pwBox.getText().equals(pwBox2.getText())) {
+                    //add new account
+                    Database mydb = Database.sharedInstance();
+                    mydb.createUserAccount(userTextField.getText(), pwBox.getText());
+
+                    // Go to login scene
+                    stage.setTitle("Login");
+                    stage.setScene(loginScene());
+
+                }
+                //check verify
+                else if(!pwBox.getText().equals(pwBox2.getText())){
+                    actiontarget.setFill(Color.FIREBRICK);
+                    actiontarget.setText("Type same password to verify");
+                }
             }
         });
 
         return new Scene(grid, 300, 275);
     }
+
+//    //--BOOLEAN CHECK PW
+//    public static boolean checkPassword(PasswordField pwBox){
+//        int length;
+//        length = pwBox.getLength();
+//        if (length < 6 || length > 11){
+//            return false;
+//        }
+//        for (int i = 0; i < pwBox.getLength();i++){
+//            if (!Character.isLetter(pwBox.getLength()))
+//            return false;
+//        }
+//        return true;
+//    }
+
 
     /***************************************************************************
      Screen name: Index
