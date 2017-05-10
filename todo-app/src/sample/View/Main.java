@@ -1,5 +1,6 @@
 package sample.View;
 
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,7 +21,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -184,7 +184,7 @@ public class Main extends Application
 
             // Go to logout scene
             stage.setTitle("Logout");
-            stage.setScene(logoutScene());
+            stage.setScene(logoutScene(user));
         });
 
         // momo put ----------
@@ -328,7 +328,7 @@ public class Main extends Application
      Screen mame: Logout
      Description: Get Logout scene
      ***************************************************************************/
-    public Scene logoutScene()
+    public Scene logoutScene(User user)
     {
         // Set margin / space
         GridPane grid = new GridPane();
@@ -350,19 +350,19 @@ public class Main extends Application
         grid.add(actionTarget, 0, 1);
 
         //BUTTON
-        Button btnNew = new Button("Cancel");
-        Button btn = new Button("OK");
+        Button btnCancel = new Button("Cancel");
+        Button btnOk = new Button("OK");
         HBox hbBtn2 = new HBox(5);
         hbBtn2.setAlignment(Pos.BOTTOM_CENTER);
-        hbBtn2.getChildren().add(btnNew);
-        hbBtn2.getChildren().add(btn);
+        hbBtn2.getChildren().add(btnCancel);
+        hbBtn2.getChildren().add(btnOk);
         grid.add(hbBtn2, 0,2);
 
 
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
 
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        btnOk.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e)
@@ -373,6 +373,23 @@ public class Main extends Application
                 // Go to create account scene
                 stage.setTitle("login");
                 stage.setScene(loginScene());
+
+            }
+        });
+        // In
+        // put field
+        TextField txtfTodo = new TextField();
+        btnCancel.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e)
+            {
+//                actiontarget.setFill(Color.FIREBRICK);
+//                actiontarget.setText(" // Add todo list cards");
+
+                //  Go to indexScene()
+                stage.setTitle("Index");
+                stage.setScene(indexScene(user, Database.sharedInstance()));
             }
         });
 
