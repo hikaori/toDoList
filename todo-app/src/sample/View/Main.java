@@ -141,11 +141,20 @@ public class Main extends Application
         btnAdd.setOnAction(e -> {
             String txtftodo = String.valueOf(txtfTodo.getText()); // momo put
             AnchorPane ap = new AnchorPane();
-            Label label = new Label("Pane "+(vPane.getChildren().size()+1) +" : "+ txtftodo); // momo put
+            Label label = new Label(txtftodo); // momo put
             AnchorPane.setLeftAnchor(label, 5.0);
             AnchorPane.setTopAnchor(label, 5.0);
 
             Button button = new Button("Remove");
+            button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    System.out.println("Hello");
+                    Database.sharedInstance().removeTodo(txtftodo,user);
+                    vPane.getChildren().remove(ap);
+                }
+            });
+
             AnchorPane.setRightAnchor(button, 5.0);
             AnchorPane.setTopAnchor(button, 5.0);
             AnchorPane.setBottomAnchor(button, 5.0);
