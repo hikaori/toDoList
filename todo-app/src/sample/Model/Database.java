@@ -1,5 +1,7 @@
 package sample.Model;
 
+import javafx.scene.control.Label;
+
 import java.util.ArrayList;
 
 /**
@@ -56,7 +58,6 @@ public class Database
                 userTodo.add(todo);
             }
         }
-
         return userTodo;
     }
 
@@ -78,6 +79,26 @@ public class Database
         allUsers.add(new User("Momo",  "123"));
         allUsers.add(new User("Maimai",  "123"));
         allUsers.add(new User("Wataru",  "123"));
+    }
+
+    public void addNewTodo(String txtftodo,User user){
+        allTodos.add(new Todo(txtftodo, new User(user.getName(),user.getPassword())));
+    }
+
+    public void removeTodo(String txtftodo, User user)
+    {
+        for (int i = 0; i < allTodos.size(); i++)
+        {
+            Todo todo = allTodos.get(i);
+            String title = todo.getTitle();
+            String name = todo.getUser().getName();
+            String pwd = todo.getUser().getPassword();
+
+            if (title.equals(txtftodo) && name.equals(user.getName()) && pwd.equals(user.getPassword()))
+            {
+                allTodos.remove(i);
+            }
+        }
     }
 
     private void setAllTodos()
@@ -124,3 +145,5 @@ public class Database
         allTodos.add(new Todo("Wataru's Task 10", new User("Wataru","123")));
     }
 }
+
+
