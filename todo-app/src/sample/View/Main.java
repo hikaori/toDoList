@@ -1,5 +1,6 @@
 package sample.View;
 
+
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,7 +21,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -94,31 +94,59 @@ public class Main extends Application
         PasswordField pwBox = new PasswordField();
         grid.add(pwBox, 1, 2);
 
-
-        //        // Password verify
-//        Label.pw2 = new Label("verify");
-//        grid.add(pw2,0,3);
-//        PasswordField pwbox2 = new PasswordField();
-//        grid.add(pwbox2,1,3);
-
+        // Password verify
+        Label pw2 = new Label("verify");
+        grid.add(pw2,0,3);
+        PasswordField pwBox2 = new PasswordField();
+        grid.add(pwBox2,1,3);
 
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
-                //add new account
-                Database mydb = Database.sharedInstance();
-                mydb.createUserAccount(userTextField.getText(), pwBox.getText());
-//                System.out.println("Added");
 
-                // Go to login scene
-                stage.setTitle("Login");
-                stage.setScene(loginScene());
+//                //check password value
+//                boolean checkPassword = true;
+//                if(!pwBox.equals(checkPassword)) {
+//                    actiontarget.setFill(Color.FIREBRICK);
+//                    actiontarget.setText("Password must be \r 6 - 10 characters long");
+//                }
+
+                if(pwBox.getText().equals(pwBox2.getText())) {
+                    //add new account
+                    Database mydb = Database.sharedInstance();
+                    mydb.createUserAccount(userTextField.getText(), pwBox.getText());
+
+                    // Go to login scene
+                    stage.setTitle("Login");
+                    stage.setScene(loginScene());
+
+                }
+                //check verify
+                else if(!pwBox.getText().equals(pwBox2.getText())){
+                    actiontarget.setFill(Color.FIREBRICK);
+                    actiontarget.setText("Type same password to verify");
+                }
             }
         });
 
         return new Scene(grid, 300, 275);
     }
+
+//    //--BOOLEAN CHECK PW
+//    public static boolean checkPassword(PasswordField pwBox){
+//        int length;
+//        length = pwBox.getLength();
+//        if (length < 6 || length > 11){
+//            return false;
+//        }
+//        for (int i = 0; i < pwBox.getLength();i++){
+//            if (!Character.isLetter(pwBox.getLength()))
+//            return false;
+//        }
+//        return true;
+//    }
+
 
     /***************************************************************************
      Screen name: Index
@@ -189,7 +217,7 @@ public class Main extends Application
 
             // Go to logout scene
             stage.setTitle("Logout");
-            stage.setScene(logoutScene());
+            stage.setScene(logoutScene(user));
         });
 
         // momo put ----------
@@ -342,7 +370,7 @@ public class Main extends Application
      Screen mame: Logout
      Description: Get Logout scene
      ***************************************************************************/
-    public Scene logoutScene()
+    public Scene logoutScene(User user)
     {
         // Set margin / space
         GridPane grid = new GridPane();
@@ -364,19 +392,19 @@ public class Main extends Application
         grid.add(actionTarget, 0, 1);
 
         //BUTTON
-        Button btnNew = new Button("Cancel");
-        Button btn = new Button("OK");
+        Button btnCancel = new Button("Cancel");
+        Button btnOk = new Button("OK");
         HBox hbBtn2 = new HBox(5);
         hbBtn2.setAlignment(Pos.BOTTOM_CENTER);
-        hbBtn2.getChildren().add(btnNew);
-        hbBtn2.getChildren().add(btn);
+        hbBtn2.getChildren().add(btnCancel);
+        hbBtn2.getChildren().add(btnOk);
         grid.add(hbBtn2, 0,2);
 
 
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
 
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        btnOk.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e)
@@ -387,6 +415,23 @@ public class Main extends Application
                 // Go to create account scene
                 stage.setTitle("login");
                 stage.setScene(loginScene());
+
+            }
+        });
+        // In
+        // put field
+        TextField txtfTodo = new TextField();
+        btnCancel.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e)
+            {
+//                actiontarget.setFill(Color.FIREBRICK);
+//                actiontarget.setText(" // Add todo list cards");
+
+                //  Go to indexScene()
+                stage.setTitle("Index");
+                stage.setScene(indexScene(user, Database.sharedInstance()));
             }
         });
 
