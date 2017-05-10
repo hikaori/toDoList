@@ -125,7 +125,7 @@ public class Main extends Application
      Description: Get Index scene
      ***************************************************************************/
     // public Scene indexScene()
-    public Scene indexScene(User user, Database db) //Momo put
+    public Scene indexScene(User user) //Momo put
 
     {
         final Random rng = new Random();
@@ -141,24 +141,19 @@ public class Main extends Application
         btnAdd.setOnAction(e -> {
             String txtftodo = String.valueOf(txtfTodo.getText()); // momo put
             AnchorPane ap = new AnchorPane();
-//            String style = String.format("-fx-background: rgb(%d, %d, %d);"+
-//                            "-fx-background-color: -fx-background;",
-//                    rng.nextInt(256),
-//                    rng.nextInt(256),
-//                    rng.nextInt(256));
-//            anchorPane.setStyle(style);
             Label label = new Label("Pane "+(vPane.getChildren().size()+1) +" : "+ txtftodo); // momo put
             AnchorPane.setLeftAnchor(label, 5.0);
             AnchorPane.setTopAnchor(label, 5.0);
+
             Button button = new Button("Remove");
-            button.setOnAction(evt -> vPane.getChildren().remove(ap));
             AnchorPane.setRightAnchor(button, 5.0);
             AnchorPane.setTopAnchor(button, 5.0);
             AnchorPane.setBottomAnchor(button, 5.0);
             ap.getChildren().addAll(label, button);
+
             vPane.getChildren().add(ap);
 
-            db.addNewTodo(txtftodo,user);
+            Database.sharedInstance().addNewTodo(txtftodo,user);
         });
 
         // Textfield and add button
@@ -189,12 +184,12 @@ public class Main extends Application
         });
 
         // momo put ----------
-        ArrayList<Todo> userTODO = db.getUserTodos(user);
+        ArrayList<Todo> userTODO = Database.sharedInstance().getUserTodos(user);
         for (Todo todo : userTODO) {
             String title = todo.getTitle();
 
             AnchorPane ap = new AnchorPane();
-            Label label = new Label("Pane "+(vPane.getChildren().size()+1) +" : "+ title); // momo put
+            Label label = new Label(title); // momo put
             AnchorPane.setLeftAnchor(label, 5.0);
             AnchorPane.setTopAnchor(label, 5.0);
             Button button = new Button("Remove");
@@ -204,6 +199,15 @@ public class Main extends Application
             AnchorPane.setBottomAnchor(button, 5.0);
             ap.getChildren().addAll(label, button);
             vPane.getChildren().add(ap);
+            button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    System.out.println(title);
+                    Database.sharedInstance().removeTodo(title,user);
+                    vPane.getChildren().remove(ap);
+                }
+            });
+
         }
         // momo put end------
 
@@ -312,7 +316,7 @@ public class Main extends Application
                 {
                     User user = new User(username, password);
                     stage.setTitle("Index");
-                    stage.setScene(indexScene(user,db));
+                    stage.setScene(indexScene(user));
                 } else {
                     stage.setTitle("New account");
                     actiontarget.setText("You don't have your account.\nTry again or create \"New account\"");
