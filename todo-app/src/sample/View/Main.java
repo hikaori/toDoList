@@ -431,7 +431,7 @@ public class Main extends Application
 
                 //  Go to indexScene()
                 stage.setTitle("Index");
-                stage.setScene(indexScene(user, Database.sharedInstance()));
+                stage.setScene(indexScene(user));
             }
         });
 
